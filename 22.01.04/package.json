@@ -1,0 +1,21 @@
+{
+  "dependencies": {
+    "body-parser": "^1.19.1",
+    "crypto": "^1.0.1",
+    "crypto-js": "^4.1.1",
+    "express": "^4.17.2",
+    "merkle": "^0.6.0",
+    "nodejs-websocket": "^1.7.2",
+    "random": "^3.0.6",
+    "ws": "^8.4.0"
+  },
+  "name": "user4",
+  "version": "1.0.0",
+  "main": "block.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "jeonjinyoung",
+  "license": "ISC",
+  "description": ""
+}
