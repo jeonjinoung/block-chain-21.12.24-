@@ -11,8 +11,6 @@ function initHttpServer(){
     const app = express()
     app.use(bodyParser.json())
 
-    // curl -H "Content-type:application/json" --data "{\"data\" : [ \"ws://localhost:6002\", \"ws://localhost:6003\"] }"
-
     app.post("/addPeers", (req,res)=>{
         const data = req.body.data || []
         connectionToPeers(data);
