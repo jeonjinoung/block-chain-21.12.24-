@@ -1,31 +1,57 @@
+
+//트랜잭션 출력
 class TxOut {
     constructor(address, amount){
+        //받을사람의 주소 == 퍼블릭키 보내는사람의 키니까 모두 알고있다?
+        //실제로 정당하게 받은사람이 아닌사람 퍼블릭키의 정당성 알수없다.
         this.address = address
+        //보내는 코인의 양
         this.amount = amount;
     }
 }
 
+//입력쪽을 봐보자
 class TxIn{
     constructor(txOutId, txOutIndex, signature){
+        //스트링으로 되어있는 txOutid
         this.txOutId = txOutId;
+        //넘버로 되어있는 인덱스
         this.txOutIndex = txOutId;
+        //시그니처 == 프라이빗키로 만든 시그니처
         this.signature = signature;
     }
 }
+//시그니처와 보낸사람의 퍼블릭키를 알 수 있다??!!!!!
+/*
+트랜잭션이 인풋 아웃풋
+인풋 -> 코인 억류??
+아웃풋 -> 새로운 주소를 보낼때 막을해서 보낸다?
+*/
+
 
 class Transaction {
     constructor(id, txIns, txOuts){
-        this.id = id;
-        this.txIns = txIns;
+        this.id = id;//string
+        this.txIns = txIns; 
         this.txOuts = txOuts;
     }
 }
 
-
+//거래아이디
 const getTransactionId = (transaction) => {
+    //transaction 매개변수
     const txInContent = transaction.txIns
-       .map((txIn) => txIn.txOutId + txIn.txOutIndex)
-       .reduce((a, b) => a + b, "");
+    
+/*
+    const txInContent = transaction.txIns
+    트랜잭션 변수안에있는 input값들 txoutid랑 txindex txins배열만큼 다합친만큼
+    다합친게 하나의 a가되고 이다음 값이 하나의 b가되서
+    string number string number  string number 다합친값이 된다.
+*/
+
+    //txIns 배열  값들을 하나씩 가져와서 매개변수로 가져와서 함수로 돌아간다?
+       .map((txIn) => txIn.txOutId + txIn.txOutIndex) // 합쳐서 계산한다?
+       .reduce((a, b) => a + b, "");//reduce 첫번째인자 a,b를 두개를 합친거를 결과로 리턴
     const txOutContent = transaction.txOuts
        .map((txOut) => txOut.address + txOut.amount)
        .reduce((a, b) => a + b, "");
@@ -36,16 +62,25 @@ const getTransactionId = (transaction) => {
 // 트랜잭션 개념이라 이런건어렵지 않으니까 map reduce를 이해할 수 있는
 //예제코드를 짜보자
 function generateTransaction() {
+    //새로운 트랜잭션을 선언
     const trans = new Transaction;
+    //id는 임의로 1을 넣어주고
     trans.id = 1;
+    //출력과 호출은 빈배열로 선언
     trans.txIns = [];
     trans.txOuts = [];
+    //for문을 사용한 인덱스는 5개만 넣어보자
     for (let i = 0; i < 5; i++) {
+        //새로운 트랜잭션 호출 구조체 선언
        const txIn = new TxIn;
+       //id type string 
        txIn.txOutId = `Id: ${i+1}`;
        txIn.txOutIndex = i;
+       //배열을 추가하는 문법 push
        trans.txIns.push(txIn);
- 
+       //trans : Transaction : 트랜잭션
+       //txIns : [] :  반뱌욜
+       //txIn : 새로운 트랜잭션 호출 구조체 선언
        const txOut = new TxOut;
        txOut.address = `address: ${i+1}`;
        txOut.amount = 10;
@@ -55,9 +90,34 @@ function generateTransaction() {
  }
  
  const newTransaction = generateTransaction();
+ console.log(1111111111111111111111)
  console.log(newTransaction);
- console.log(getTransactionId(newTransaction));
+ /*
+ Transaction {
+  id: 1,
+  txIns:
+   [ TxIn { txOutId: 'Id: 1', txOutIndex: 0, signature: undefined },
+     TxIn { txOutId: 'Id: 2', txOutIndex: 1, signature: undefined },
+     TxIn { txOutId: 'Id: 3', txOutIndex: 2, signature: undefined },
+     TxIn { txOutId: 'Id: 4', txOutIndex: 3, signature: undefined },
+     TxIn { txOutId: 'Id: 5', txOutIndex: 4, signature: undefined } ],
+  txOuts:
+   [ TxOut { address: 'address: 1', amount: 10 },
+     TxOut { address: 'address: 2', amount: 10 },
+     TxOut { address: 'address: 3', amount: 10 },
+     TxOut { address: 'address: 4', amount: 10 },
+     TxOut { address: 'address: 5', amount: 10 } ] }
+ */
+ console.log(1111111111111111111111)
 
+ console.log(2222222222222222222222)
+ console.log(getTransactionId(newTransaction));
+ /*
+ { txInContent: 'Id: 10Id: 21Id: 32Id: 43Id: 54',
+  txOutContent:
+   'address: 110address: 210address: 310address: 410address: 510' }
+  */
+ console.log(2222222222222222222222)
 
 
 
